@@ -1,0 +1,58 @@
+/* gradient */
+
+.gold {
+    background: linear-gradient(orangered, gold);
+}
+
+.lg-gold {
+    background: linear-gradient(to top left, rgb(0, 66, 128), #025a1ff1, rgb(0, 255, 149), gold);
+    background-size: cover;
+    color: #fff;
+    font-size: 1.2em;
+}
+
+/* Точки останова */
+.pixels {
+    background: linear-gradient(to right, yellowgreen 1%, rgb(100, 240, 1) 10%, rgba(50, 200, 10, 0.9) 15%, rgba(5, 155, 85, 0.8) 20%, rgba(2, 90, 10, 0.7) 25%, #025a1ff1 30%);
+}
+
+.percentr {
+    background: linear-gradient(to right, rgba(0, 64, 9, 0.89) 2em, #025a1ff1 3em, rgb(6, 162, 79) 7em, rgba(60, 200, 70, 0.89) 12em);
+}
+
+.percentl {
+    background: linear-gradient(to left, rgba(0, 64, 9, 0.89) 2em, #025a1ff1 3em, rgb(6, 162, 79) 7em, rgba(60, 200, 70, 0.89) 12em);
+}
+
+.negative {
+   background: linear-gradient(to right, rgb(167, 235, 135) -50%, #025a1ff1 150%);
+}
+
+/* Полосатые градиенты */
+
+.light {
+    background: peachpuff linear-gradient(90deg,
+     rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, .4) 50%
+     ) center center / 2em;
+}
+ .dark {
+    background: steelblue linear-gradient(
+     rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .2) 50%
+     ) center center / 100% 1em;
+}
+ 
+
+/* text shadow*/
+
+.text-shadow-1 {
+    background: #77F7DE;
+    color: white;
+    text-shadow: -2px -2px 0 #4D4644, 2px -2px 0 #4D4644, -2px 2px 0 #4D4644, 2px 2px 0 #4D4644, 4px 4px 0 white, 5px 5px 0 white, 6px 6px 0 white;
+    letter-spacing: 0.1em;
+  }
+ .text-shadow-2 {
+    background: linear-gradient(-45deg, #FEE864, #F5965E);
+    color: #f4f4f4;
+    text-shadow: -1px -1px white, 1px 1px gray, 2px 2px #7a7a7a, 3px 3px #757575, 4px 4px #707070, 5px 5px #6b6b6b, 6px 6px #666666, 7px 7px #616161, 8px 8px #5c5c5c, 9px 9px #575757, 10px 10px #525252, 11px 11px #4d4d4d, 18px 18px 30px rgba(0, 0, 0, .4), 18px 18px 10px rgba(0, 0, 0, .4);
+  }
+ 

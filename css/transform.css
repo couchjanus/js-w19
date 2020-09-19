@@ -1,0 +1,139 @@
+.box-1{
+    width: 20vw;
+    padding: 4rem 4rem;
+    background-color: red;
+}
+
+.box-2{
+    width: 20vw;
+    padding: 4rem 4rem;
+    background-color: green;
+}
+
+.box-3{
+    width: 20vw;
+    padding: 4rem 4rem;
+    background-color: rgb(0, 2, 128);
+}
+
+.box-4{
+    width: 20vw;
+    padding: 4rem 4rem;
+    background-color: rgb(241, 226, 10);
+}
+
+/* rotate */
+/* .box-1 {
+    transform: rotate(20deg);
+}
+.box-2 {
+    transform: rotate(-55deg);
+} */
+
+/* scale */
+
+/* .box-1 {
+    transform: scale(.75);
+  }
+.box-2 {
+    transform: scale(1.25);
+} */
+
+/*  */
+
+.box-1 {
+    transform: scaleX(.5);
+  }
+  .box-2 {
+    transform: scaleY(1.15);
+  }
+  .box-3 {
+    transform: scale(.5, 1.15);
+  }
+
+  /* translate */
+
+  .box-1 {
+    transform: translateX(-10px);
+  }
+  .box-2 {
+    transform: translateY(25%);
+  }
+  .box-3 {
+    transform: translate(-10px, 25%);
+  }
+  /* skew */
+
+  .box-1 {
+    transform: skewX(5deg);
+  }
+  .box-2 {
+    transform: skewY(-20deg);
+  }
+  .box-3 {
+    transform: skew(5deg, -20deg);
+  }
+
+  /* Combining Transforms */
+
+  .box-1 {
+    transform: rotate(25deg) scale(.75);
+  }
+  .box-2 {
+    transform: skew(10deg, 20deg) translateX(20px);
+  }
+
+  /*  */
+  
+  .cube {
+    position: relative;
+  }
+  .side {
+    height: 95px;
+    position: absolute;
+    width: 95px;
+  }
+  .top {
+    background: #9acc53;
+    transform: rotate(-45deg) skew(15deg, 15deg);
+  }
+  .left {
+    background: #8ec63f;
+    transform: rotate(15deg) skew(15deg, 15deg) translate(-50%, 100%);
+  }
+  .right {
+    background: #80b239;
+    transform: rotate(-15deg) skew(-15deg, -15deg) translate(50%, 100%);
+  }
+
+  /* Transform Origin */
+  .box-1 {
+    transform: rotate(15deg);
+    transform-origin: 0 0;
+  }
+  .box-2 {
+    transform: scale(.5);
+    transform-origin: 100% 100%;
+  }
+  .box-3 {
+    transform: skewX(20deg);
+    transform-origin: top left;
+  }
+  .box-4 {
+    transform: scale(.75) translate(-10px, -10px);
+    transform-origin: 20px 50px;
+  }
+  
+  /* perspective */
+
+  .box {
+    transform: perspective(200px) rotateX(45deg);
+  }
+  
+  .group {
+    perspective: 200px;
+  }
+  .box {
+    transform: rotateX(45deg);
+  }
+/*  */
