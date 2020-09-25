@@ -33,7 +33,7 @@
                             <a href="index.html" class="nav-link">Home</a>
                         </li>
                         <li>
-                            <a href="#shop" class="nav-link">Shop</a>
+                            <a href="shop.html" class="nav-link">Shop</a>
                         </li>
                         <li>
                             <a href="blog.html" class="nav-link">Blog</a>
@@ -46,10 +46,10 @@
                 
                 <ul class="navbar-tool effect-ease">
                     <li>
-                        <a class="sidebar-toggle" href="#"><i class="fas fa-dolly-flatbed text-gray"></i><small class="text-gray">(2)</small></a>
+                        <a class="sidebar-toggle" href="#"><i class="fas fa-dolly-flatbed text-gray"></i><small class="text-gray count-items-in-cart"></small></a>
                     </li>
                     <li>
-                        <a class="" href="#"><i class="far fa-heart"></i><small class="text-gray">(0)</small></a>
+                        <a class="" href="#"><i class="far fa-heart"></i><small class="text-gray like-me"></small></a>
                     </li>
                     <li>
                         <a class="" href="#login"><i class="fas fa-user-alt text-gray"></i></a>
@@ -74,7 +74,27 @@
 
         <!-- cart items -->
         <div class="cart-items">
-
+          <div class="cart-item">
+            <div class="picture product-img">
+                <img src="images/product-3.jpg" alt="name" class="img-fluid w-100">
+            </div>
+            <div class="product-name p-auto">Product name</div>
+            <div class="remove-btn text-right">
+                <a class="reset-anchor m-auto" href="#">
+                    <i class="fas fa-trash-alt"></i>
+                </a>
+            </div>
+            <div class="quantity">
+                <div class="border d-flex justify-content-around mx-auto">
+                    <i class="fas fa-caret-left inc-dec-btn"></i>
+                    <span class="border-1 p-1 amount">1</span>
+                    <i class="fas fa-caret-right inc-dec-btn"></i>
+                </div>
+            </div>
+            <div class="price">
+                $<span class="product-price">123</span>
+            </div>
+          </div>
         </div>
         <!-- buttons -->
         <div class="cart-footer">
@@ -123,7 +143,7 @@
                     </div>
                 </div>
             </article>
-    </section>
+        </section>
 
         <!--  -->
         <section class="pt-5">
@@ -160,8 +180,8 @@
                             <a class="d-block" href="detail.html"><img class="img-fluid w-100" src="images/product-1.jpg" alt="..."></a>
                             <div class="product-overlay">
                                 <ul class="mb-0 list-inline">
-                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
-                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="cart.html">Add to cart</a></li>
+                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark like-it" href="#"><i class="far fa-heart"></i></a></li>
+                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart" href="#">Add to cart</a></li>
                                     <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="fas fa-expand"></i></a>
                                     </li>
                                 </ul>
@@ -179,8 +199,8 @@
                             <a class="d-block" href="detail.html"><img class="img-fluid w-100" src="images/product-2.jpg" alt="..."></a>
                             <div class="product-overlay">
                                 <ul class="mb-0 list-inline">
-                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
-                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="cart.html">Add to cart</a></li>
+                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark like-it" href="#"><i class="far fa-heart"></i></a></li>
+                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart" href="#">Add to cart</a></li>
                                     <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="fas fa-expand"></i></a>
                                     </li>
                                 </ul>
@@ -198,8 +218,8 @@
                             <a class="d-block" href="detail.html"><img class="img-fluid w-100" src="images/product-3.jpg" alt="..."></a>
                             <div class="product-overlay">
                                 <ul class="mb-0 list-inline">
-                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
-                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="cart.html">Add to cart</a></li>
+                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark like-it" href="#"><i class="far fa-heart"></i></a></li>
+                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart" href="#">Add to cart</a></li>
                                     <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="fas fa-expand"></i></a>
                                     </li>
                                 </ul>
@@ -217,8 +237,8 @@
                             <a class="d-block" href="detail.html"><img class="img-fluid w-100" src="images/product-4.jpg" alt="..."></a>
                             <div class="product-overlay">
                                 <ul class="mb-0 list-inline">
-                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
-                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="cart.html">Add to cart</a></li>
+                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart like-it"></i></a></li>
+                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart" href="#">Add to cart</a></li>
                                     <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="fas fa-expand"></i></a>
                                     </li>
                                 </ul>
@@ -237,7 +257,7 @@
                             <div class="product-overlay">
                                 <ul class="mb-0 list-inline">
                                     <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
-                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="cart.html">Add to cart</a></li>
+                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart" href="#">Add to cart</a></li>
                                     <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="fas fa-expand"></i></a>
                                     </li>
                                 </ul>
@@ -256,7 +276,7 @@
                             <div class="product-overlay">
                                 <ul class="mb-0 list-inline">
                                     <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
-                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="cart.html">Add to cart</a></li>
+                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart" href="#">Add to cart</a></li>
                                     <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="fas fa-expand"></i></a>
                                     </li>
                                 </ul>
@@ -275,7 +295,7 @@
                             <div class="product-overlay">
                                 <ul class="mb-0 list-inline">
                                     <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
-                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="cart.html">Add to cart</a></li>
+                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart" href="#">Add to cart</a></li>
                                     <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="fas fa-expand"></i></a>
                                     </li>
                                 </ul>
@@ -294,7 +314,7 @@
                             <div class="product-overlay">
                                 <ul class="mb-0 list-inline">
                                     <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a></li>
-                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark" href="cart.html">Add to cart</a></li>
+                                    <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart" href="#">Add to cart</a></li>
                                     <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="fas fa-expand"></i></a>
                                     </li>
                                 </ul>

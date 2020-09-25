@@ -186,3 +186,22 @@ transition: var(--transition);
     color: var(--clr-primary);
   }
 }
+
+.count-items-in-cart, .like-me{ 
+  padding: 0 0.2rem;
+}
+.notempty::before{
+  margin-right: 1px;
+	content: '(';
+  color: red;
+}
+.notempty::after{
+  margin-left: 1px;
+	content: ')';
+  color: red;
+}
+
+.notempty{
+  color: red;
+}
+
