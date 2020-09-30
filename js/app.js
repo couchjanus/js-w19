@@ -1,5 +1,4 @@
 "use strict"
-// 
 const sidebar = document.querySelector(".sidebar");
 const sidebarToggle = document.querySelector(".sidebar-toggle");
 const closeBtn = document.querySelector(".close-btn");
@@ -7,6 +6,7 @@ const likeMe = document.querySelector(".like-me");
 const countItemsInCart = document.querySelector('.count-items-in-cart');
 const clearCart = document.querySelector(".clear-cart");
 const cartItems = document.querySelector(".cart-items");
+
 // function openCart() {
 //     sidebar.style.transform = 'translate(0)';
 // }
