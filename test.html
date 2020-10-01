@@ -8,29 +8,99 @@
     <meta name="description" content="Your page description here">
     <meta name="author" content="">
     <link rel="icon" href="favicon.ico">
-    <link href="css/gradient.css" rel="stylesheet">
     <!-- <link href="css/transform.css" rel="stylesheet"> -->
 </head>
 <body>
+  <!-- aside -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+        <button class="close-btn"><i class="fas fa-times"></i></button>
+        <h5 class="logo">Shopping Cart</h5>
+    </div>
 
-  <div class="box box-1">Box 1</div>
-  <div class="box box-2">Box 2</div>
-  <div class="box box-3">Box 3</div>
-  <div class="box box-4">Box 4</div>
+    <!-- cart items -->
+    <div class="cart-items">
+      <div class="cart-item">
+        <div class="picture product-img">
+            <img src="images/product-3.jpg" alt="name" class="img-fluid w-100">
+        </div>
+        <div class="product-name p-auto">Product name</div>
+        <div class="remove-btn text-right">
+            <a class="reset-anchor m-auto" href="#">
+                <i class="fas fa-trash-alt"></i>
+            </a>
+        </div>
+        <div class="quantity">
+            <div class="border d-flex justify-content-around mx-auto">
+                <i class="fas fa-caret-left inc-dec-btn"></i>
+                <span class="border-1 p-1 amount">1</span>
+                <i class="fas fa-caret-right inc-dec-btn"></i>
+            </div>
+        </div>
+        <div class="price">
+            $<span class="product-price">123</span>
+        </div>
+      </div>
+    </div>
+    <!-- buttons -->
+    <div class="cart-footer">
+        <h3>your total : $<span class="cart-total">0</span></h3>
+        <button class="clear-cart">Clear Cart</button>
+    </div>
 
-  <div class="cube dark">
-    <figure class="side top">1</figure>
-    <figure class="side left">2</figure>
-    <figure class="side right">3</figure>
+</aside>
+
+<div class="container">
+  <div class="row">
+    <!-- PRODUCT-->
+    <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="product text-center">
+            <div class="position-relative mb-3">
+
+                <a class="d-block" href="detail.html"><img class="img-fluid w-100" src="images/product-1.jpg" alt="..."></a>
+                <div class="product-overlay">
+                    <ul class="mb-0 list-inline">
+                        <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark like-it" href="#"><i class="far fa-heart"></i></a></li>
+                        <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart" href="#">Add to cart</a></li>
+                        <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i class="fas fa-expand"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <h6> <a class="reset-anchor" href="detail.html">Kui Ye Chen’s AirPods</a></h6>
+            <p class="small text-muted">$250</p>
+        </div>
+    </div><!-- ./PRODUCT -->
+  </div><!-- ./row -->
+</div>
+
+<script id="template-item" type="text/template">
+</script>
+
+<template id="cartItem">
+  <div class="cart-item">
+    <div class="picture product-img">
+        <img src="images/product-3.jpg" alt="name" class="img-fluid w-100">
+    </div>
+    <div class="product-name p-auto">Product name</div>
+    <div class="remove-btn text-right">
+        <a class="reset-anchor m-auto" href="#">
+            <i class="fas fa-trash-alt"></i>
+        </a>
+    </div>
+    <div class="quantity">
+        <div class="border d-flex justify-content-around mx-auto">
+            <i class="fas fa-caret-left inc-dec-btn"></i>
+            <span class="border-1 p-1 amount">1</span>
+            <i class="fas fa-caret-right inc-dec-btn"></i>
+        </div>
+    </div>
+    <div class="price">
+        $<span class="product-price">123</span>
+    </div>
   </div>
-
-
-  <div class="group percentr">
-    <figure class="box box-1">Box 1</figure>
-    <figure class="box box-2 text-shadow-2">Box 2</figure>
-    <figure class="box box-3">Box 3</figure>
-  </div>
-  <!--  -->
+</template>
   
+  <script src="js/test.js"></script>
 </body>
 </html>

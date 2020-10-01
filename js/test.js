@@ -1,163 +1,350 @@
 'use strict';
 
-// Массив – это упорядоченная коллекция значений. 
+// Метод createElement создает элемент html
 
-// Массивы являются частным случаем объектов. 
-console.log(typeof []); // "object"
+{/* 
+  <div class="cart-item">
 
-// Узнать является ли переменная массивом можно с помощью метода Array.isArray():
-console.log(Array.isArray([])); // true
+    <div class="picture product-img">
+      <img src="images/product-3.jpg" alt="name" class="img-fluid w-100">
+    </div>
+    
+    <div class="product-name p-auto">Product name</div>
+    <div class="remove-btn text-right">
+      <a class="reset-anchor m-auto" href="#">
+        <i class="fas fa-trash-alt"></i>
+      </a>
+    </div>
+    <div class="quantity">
+      <div class="border d-flex justify-content-around mx-auto">
+        <i class="fas fa-caret-left inc-dec-btn"></i>
+        <span class="border-1 p-1 amount">1</span>
+        <i class="fas fa-caret-right inc-dec-btn"></i>
+      </div>
+    </div>
+    <div class="price">
+      $<span class="product-price">123</span>
+    </div>
+  </div> 
+*/}
 
-// Создание массива с помощью функци-конструктора Array. 
-let empty = new Array(); 
-// Создание массивов с помощью литерала массива.
-let cart = []; // пустой массив
+let cartItem = document.createElement("div");
 
-let numbers = [3, -5, 9, 1, 21]; // массив, состоящий из чисел
-
-// При создании массивов можно вставлять в конец необязательную завершающую запятую:
-let coffee = [ 'Lavazza',  'Nescafe',   'Jardin', ];
-
-// Элементы в массиве не обязательно должны иметь одинаковый тип данных.
-let customArr = [6, true, 'Строка']; 
-
-// Определение длины массива (количества элементов) с помощью свойства length.
-console.log(customArr.length); // 3
-
-// Массив - объект, представляющий собой проиндексированный набор элементов. 
-
-// Доступ к элементам массива осуществляется через квадратные скобки с помощью порядкового номера - индекса. 
-// Массивы в JavaScript индексируются с нуля: первый элемент массива имеет индекс, равный 0, а индекс последнего элемента равен значению свойства массива length минус 1.
-
-let cart = ['product 1', 'product 2'];
-console.log(cart[0]);               // напечатает 'product 1'
-console.log(cart[1]);               // напечатает 'product 2'
-console.log(cart[cart.length - 1]); // напечатает 'product 2'
-
-// Чтобы модифицировать значение в существующем массиве, просто добавьте новое значение к элементу массива с указанным индексом:
-cart[1] = "extra red product"; 
-cart[3] = "Blue product"; 
-console.log(cart);
-
-// В качестве значений элементов массива можно использовать выражения:
-let lengthA = 7, widthA = 5;
-let point = [lengthA *2, widthA + 4, -2];
-
-// В качестве значений элементов массива могут использоваться объекты.
-let cart = [ 
-  {
-    name: "Blue product", 
-    price: 3
-  },
-  {
-    name: "Red product", 
-    price: 4
-  },
-  {
-    name: "Green product", 
-    price: 5
-  },
-]; 
-// массив, состоящий из 3 объектов
-
-// При копировании значения переменной, содержащей массив, мы на самом деле присваиваем ей не сам массив, а ссылку на него.
-
-// скопируем в newCart массив cart (в результате эти две переменные будут содержать ссылку на один и тот же массив)
-let newCart = cart;
-console.log( cart === newCart ); // true
-// добавим в массив новый элемент
-newCart[3]={
-  name: "Yellow product", 
-  price: 7
-}
-
-console.log(cart); 
-
-// Размер массива может увеличиваться и уменьшаться в любое время
-// Длина length – не количество элементов массива, а последний индекс + 1.
-
-cart[1000] = {};
-console.log(cart[1000]);
-console.log(cart.length);
-// элемент массива будет пустым и вернёт undefined. 
-console.log(cart[13]); // undefined
-
-// При уменьшении length массив укорачивается. Причем этот процесс необратимый, т.е. даже если потом вернуть length обратно – значения не восстановятся:
-cart.length = 2; // укоротить до 2 элементов
-console.log(cart[3]);
-cart.length = 1000; // вернуть length обратно, как было
-console.log(cart[1000]); // undefined: значения не вернулись                         
+const picture = document.createElement('div');
+const imgFluid = document.createElement('img');
+const productName = document.createElement('div');
 
 
-// Оператор delete используется не для удаления элемента из массива, а для присваиванию данному элементу массива значение undefined.
 
-delete cart[1];
-console.log(cart);
-console.log(1 + " элемент массива = " + cart[1]);
+const price = document.createElement('div');
+const productPrice = document.createElement('span');
 
-// Самый простой способ очистить массив - это cart.length=0.
+// createTextNode(text): создает и возвращает текстовый узел. 
+let productText = document.createTextNode("Joemalone Women prefume");
+// можем воспользоваться свойством textContent:
+productPrice.textContent = "$25";
 
-function clearCart(){
-  cart.length = 0;
-  console.log("Your Cart is empty");
-}
+// Метод appendChild добавляет элемент в конец списка дочерних элементов родителя. 
+// Если элемент уже существует он удаляется из текущего родителя и вставляется заново.
 
-// Цикл for повторяет действия, пока не произойдёт какое-либо событие завершения цикла. Объявление оператора for выглядит следующим образом:
-// for ([начало]; [условие]; [шаг]) выражения
-// Выполняется выражение начало, если оно указано. Обычно инициализирует один или несколько счётчиков. Также используется для объявления переменных.
-// Выполняется условие. Если условие истинно, то выполняются выражения. Если ложно, цикл for прерывается. Если условие полностью пропущено, то оно считается истинным.
-// Выполняются выражения. Чтобы выполнить несколько выражений, используются блок-выражение  { ... }  для группировки выражений.
-// Обновляется шаг, если он есть, а затем управление возвращается к шагу 2.
+productName.appendChild(productText);
 
-for (let i = 0; i<10;i++) {
-    console.log(i);
-}
+imgFluid.setAttribute('src', "images/product-3.jpg");
+imgFluid.setAttribute('alt', "Joemalone Women prefume");
+imgFluid.className = "img-fluid w-100";
 
-for (let i = 0; i<cart.length;i++) {
-  console.log(cart[i]);
-}
+picture.appendChild(imgFluid);
+price.appendChild(productPrice);
 
-// Цикл do...while повторяется пока заданное условие истинно:
-// Do  выражения while (условие);
-// выражения выполняются пока условие истинно. Если условие истинно, выражения выполняются снова. В конце каждого прохода условие проверяется. Если условие ложно, выполнение приостанавливается и управление передается выражению после do...while.
-// цикл do выполнится минимум 1 раз и запускается снова, пока i меньше 5.
+cartItem.appendChild(picture);
+cartItem.appendChild(productName);
+cartItem.appendChild(price);
 
-do {
- i += 1;
- console.log(cart[i]);
-} while (i < cart.length);
-
-// Следующий цикл while работает, пока n меньше трёх:
-var n = 0;
-var x = 0;
-while (n < 3) {
- n++;
- x += n;
-}
-
-// Метод querySelector() возвращает первый элемент, который соответствует одному или более CSS селекторам. Если совпадения не будет, то он вернет null.
-// var ele = document.querySelector(selector);
-
-const sidebar = document.querySelector(".sidebar");
-const sidebarToggle = document.querySelector(".sidebar-toggle");
-const closeBtn = document.querySelector(".close-btn");
-const likeMe = document/querySelector(".like-me");
-const countItemsInCart = document.querySelector('.count-items-in-cart');
-const clearCart = document.querySelector(".clear-cart");
+document.querySelector('.cart-items').appendChild(cartItem);
 
 
-// Метод querySelectorAll объекта document, и элементов-узлов, принимает строку селектора и возвращает массивоподобный объект, содержащий все найденные элементы.
+// Метод parent.insertBefore(узел, место вставки)
+// узел - Ссылка на вставляемый узел.
+// место вставки - Ссылка на элемент, перед которым необходимо вставить новый узел. Если аргумент равен null, то узел вставляется в конец родителя (то есть сработает, как appendChild()).
+// Данный метод позволяет вставить элемент в любое место, а не только в конец родителя.
 
-let addToCart = document.querySelectorAll('.add-to-cart');
+const quantity = document.createElement('div');
+const border = document.createElement('div');
+const caretLeft = document.createElement('i');
+const amount = document.createElement('span');
+const caretRight = document.createElement('i');
 
-for(let i = 0; i < addToCart.length; i++){
-  console.log(addToCart[i]);
-  addToCart[i].style.backgroundColor = '#f4f4f4';
-}
+quantity.className = "quantity";
 
-// Метод getElementsByClassName находит массив объектов определенного класса.
-let addToCart = document.getElementsByClassName('add-to-cart');
+// parent
+border.className = "border d-flex justify-content-around mx-auto";
+amount.className = "border-1 p-1 amount";
+amount.textContent = 1;
+border.appendChild(amount);
 
-for (let i = 0; i<addToCart.length; i++) {
-  addToCart[i].style.backgroundColor = "#f0"+(10*i)+"0f";
-}
+caretLeft.className = "fas fa-caret-left inc-dec-btn";
+caretRight.className = "fas fa-caret-right inc-dec-btn";
+
+// Вставка в самое начало родителя, то есть перед первым узлом
+border.insertBefore(caretLeft, border.firstChild);
+
+// Вставка в конец родителя, аналогично appendChild()
+// border.appendChild(caretRight);
+border.insertBefore(caretRight, null);
+
+quantity.appendChild(border);
+
+
+// Добавить новый узел в документ можно простой вставкой HTML-кода в виде строки. Для этого используется метод insertAdjacentHTML().
+// parent.insertAdjacentHTML(место вставки, HTML-код)
+// место вставки - Позиция, куда необходимо вставить код. Это место указывается относительно самого элемента и может иметь одно из следующих значений:
+// beforebegin - непосредственно перед открывающим тегом.
+// afterbegin - сразу после открывающего тега.
+// beforeend - непосредственно перед закрывающим тегом.
+// afterend - сразу после закрывающего тега.
+
+let parent = document.querySelector('.cart-item');
+
+parent.querySelector('.product-name').insertAdjacentHTML('beforeend', '<div class="remove-btn text-right"><a class="reset-anchor m-auto" href="#"><i class="fas fa-trash-alt"></i></a></div>');
+
+
+// Метод replaceChild() удаляет один узел и вставляет на его место новый.
+// parent.replaceChild(новый узел, старый узел)
+// новый узел - Ссылка на вставляемый узел.
+// старый узел - Ссылка на удаляемый узел.
+
+// let li1 = document.querySelector('li.list-inline-item'); // ссылка на 1 существующий элемент
+// console.log(li1);
+
+// let li2 = li1.nextSibling; // ссылка на 2 существующий элемент
+// console.log(li2);
+
+// // Метод возвращает ссылку на удаленный узел.
+// let replaceLi = ul.replaceChild(li1, li2); // заменяем элемент li1 на li2
+
+// ul.insertBefore(replaceLi, li1);
+
+
+// Браузер содержимое тега <script> считает простым текстом, а так как в атрибуте type у него указан неизвестный ему MIME-тип, то интерпретировать или отображать он его не станет. 
+//<script id="template-item" type="text/template">
+// </script>
+
+// Содержимое тега script можно получить после загрузки документа, обратившись к нему по id.
+
+// let templateSource = document.getElementById("template-item").innerHTML;      
+
+// const section = document.createElement("section");
+// section.classList = "text-center border border-light p-5 my-3";
+
+// section.innerHTML = templateSource;
+// document.querySelector('.container').appendChild(section);
+
+
+let content = document.getElementById("cartItem").content;  
+// document.querySelector('.cart-items').appendChild(content);
+
+// Для использования template его необходимо активировать. 
+
+let addToCart = document.querySelector('.add-to-cart');
+
+addToCart.addEventListener('click', function(){
+    document.querySelector('.cart-items').appendChild(content);
+});
+
+// Самый простой способ активации заключается в создании deep copy свойства .content с использованием метода  document.importNode().  Свойство .content является read-only.
+
+// addToCart.addEventListener('click', function(){
+//     document.querySelector('.cart-items').append(document.importNode(content, true));
+// });
+
+
+// const product = {
+//   id:1,
+//   image:"images/product-1.jpg",
+//   name:"Kui Ye Chen’s AirPods",
+//   price:123
+// };
+
+// for (let key in product) { 
+//   console.log(key + ': ' + product[key]);
+// }
+
+// products.forEach(function(item) {
+//   console.log(item);
+// });
+ 
+
+// // Чтобы создать шаблонную строку, необходимо использовать символ обратной кавычки (`):
+
+// let newString = `A string`;
+
+// // Шаблонные строки позволяют записывать значения переменных на нескольких строках. 
+// // В отличие от обычных строк, в шаблонных строках можно использовать символы переноса строк:
+
+// let listInline= `
+// <ul class="mb-0 list-inline">
+//   <li class="list-inline-item m-0 p-0">
+//       <a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a>
+//   </li>
+//   <li class="list-inline-item m-0 p-0">
+//       <a class="btn btn-sm btn-dark add-to-cart" href="#">Add to cart</a>
+//   </li>
+//   <li class="list-inline-item mr-0">
+//       <a class="btn btn-sm btn-outline-dark" href="#"><i class="fas fa-expand"></i></a>
+//   </li>
+// </ul>
+// `;
+// // Все пробельные символы в шаблонной строке, включая переносы строк и отступы, включаются «как есть» в результат.
+
+// let productHtml = `
+// <div class="col-xl-3 col-lg-4 col-sm-6">
+// <div class="product text-center">
+//   <div class="position-relative mb-3">
+
+//       <a class="d-block" href="detail.html"><img class="img-fluid w-100 product-img"
+//               src="images/product-1.jpg" alt="..."></a>
+//       <div class="product-overlay">
+//           <ul class="mb-0 list-inline">
+//               <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark"
+//                       href="#"><i class="far fa-heart"></i></a></li>
+//               <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart"
+//                       href="#">Add to cart</a></li>
+//               <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i
+//                           class="fas fa-expand"></i></a>
+//               </li>
+//           </ul>
+//       </div>
+//   </div>
+//   <h6> <a class="reset-anchor product-name" href="detail.html">Kui Ye Chen’s AirPods</a></h6>
+//   <p class="small text-muted product-price">$250</p>
+// </div>
+// </div>
+// `;
+
+// // Выражения: ${expression}. 
+
+// // Синтаксис ${} позволяет вставить в скобки выражение, которое передаст свое значение. Можно использовать обычную строку.
+// console.log(`${"Kui Ye Chen’s AirPods"}`);
+
+// let name = "Kui Ye Chen’s AirPods";
+// console.log(`${name}`);
+
+// // В выражениях можно проводить любые математические операции.
+// let price = 19.99;
+// let q = 5;
+// let prod = `The price of ${name} is ${price * q}`;
+
+// // Выражения можно использовать и с более сложными объектами.
+
+// let makeProduct = {
+//   id:1,
+//   image:"images/product-1.jpg",
+//   name:"Kui Ye Chen’s AirPods",
+//   price:123,
+//   renderProduct() {
+//       return `
+//       <div class="col-xl-3 col-lg-4 col-sm-6">
+//           <div class="product text-center">
+//               <div class="position-relative mb-3">
+//                   <a class="d-block" href="detail.html">
+//                       <img class="img-fluid w-100 product-img" src="${this.image}" alt="...">
+//                       </a>
+//                   <div class="product-overlay">
+//                       <ul class="mb-0 list-inline">
+//                           <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark"
+//                                   href="#"><i class="far fa-heart"></i></a></li>
+//                           <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart"
+//                                   href="#">Add to cart</a></li>
+//                           <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i
+//                                       class="fas fa-expand"></i></a>
+//                           </li>
+//                       </ul>
+//                   </div>
+//               </div>
+//               <h6> <a class="reset-anchor product-name" href="detail.html">${this.name}</a></h6>
+//               <p class="small text-muted product-price">${this.price}</p>
+//           </div>
+//       </div>
+//       `;
+//   }
+// };
+
+// console.log(makeProduct.renderProduct());
+
+//   // на основе шаблонных строк можно делать HTML шаблоны.
+//   let data = {
+//       id:1,
+//       image:"images/product-1.jpg",
+//       name:"Kui Ye Chen’s AirPods",
+//       price:123
+//   };
+  
+//   // создадим разметку
+//   function createMarkup(data) {
+//    return `
+//    <div class="col-xl-3 col-lg-4 col-sm-6">
+//           <div class="product text-center">
+//               <div class="position-relative mb-3">
+//                   <a class="d-block" href="detail.html">
+//                       <img class="img-fluid w-100 product-img" src="${data.image}" alt="...">
+//                       </a>
+//                   <div class="product-overlay">
+//                       <ul class="mb-0 list-inline">
+//                           <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark"
+//                                   href="#"><i class="far fa-heart"></i></a></li>
+//                           <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart"
+//                                   href="#">Add to cart</a></li>
+//                           <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i
+//                                       class="fas fa-expand"></i></a>
+//                           </li>
+//                       </ul>
+//                   </div>
+//               </div>
+//               <h6> <a class="reset-anchor product-name" href="detail.html">${data.name}</a></h6>
+//               <p class="small text-muted product-price">${data.price}</p>
+//           </div>
+//       </div>
+//    `
+//   }
+
+//   // document.querySelector('.row').innerHTML = createMarkup(data);
+  
+//   // let res = '';
+//   // products.forEach(function(item) {
+//   //     res+=createMarkup(item);
+//   // });
+//   // document.querySelector('.row').innerHTML = res;
+
+  
+//   function socIcon(className, icon, capture='') { 
+//       return `<li class="list-inline-item m-0 p-0 ${className}"><a class="btn btn-sm btn-outline-dark"
+//       href="#"><i class="far ${icon}"></i> ${capture}</a></li>
+//      `; 
+//   }
+//   // let icon = 'fa-heart';
+//   // console.log(`Something is ${socIcon('fa-heart')}.`);
+
+//   function createNewMarkup(data) {
+//       return `
+//       <div class="col-xl-3 col-lg-4 col-sm-6">
+//              <div class="product text-center">
+//                  <div class="position-relative mb-3">
+//                      <a class="d-block" href="detail.html">
+//                          <img class="img-fluid w-100 product-img" src="${data.image}" alt="...">
+//                          </a>
+//                      <div class="product-overlay">
+//                          <ul class="mb-0 list-inline">
+//                          ${socIcon('like-this','fa-heart', )}
+//                          ${socIcon('add-to-cart','fa-shopping-cart', 'Add to cart')}
+//                          ${socIcon('view-this','fa-expand')}
+//                          </ul>
+//                      </div>
+//                  </div>
+//                  <h6> <a class="reset-anchor product-name" href="detail.html">${data.name}</a></h6>
+//                  <p class="small text-muted product-price">${data.price}</p>
+//              </div>
+//          </div>
+//       `
+//      }
+ 
+//   document.querySelector('.row').innerHTML = createNewMarkup(data);
