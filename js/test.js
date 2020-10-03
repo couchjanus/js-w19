@@ -1,350 +1,275 @@
 'use strict';
+const overlayGroup = [
+    {
+        liClass:'list-inline-item m-0 p-0 like-this',
+        aClass:'btn btn-sm btn-outline-dark',
+        icon:'fas fa-heart',
+        capture:''
+    },
+    {
+        liClass:'list-inline-item m-0 p-0 add-to-cart',
+        aClass:'btn btn-sm btn-outline-dark',
+        icon:'fas fa-dolly-flatbed',
+        capture:'Add to cart'
+    },
+    {
+        liClass:'list-inline-item m-0 p-0 view-this',
+        aClass:'btn btn-sm btn-outline-dark',
+        icon:'fas fa-expand',
+        capture:''
+    },
+];
 
-// Метод createElement создает элемент html
 
-{/* 
-  <div class="cart-item">
+const socialGroup = [
+    {
+        liClass:'',
+        aClass:'footer-link twitter',
+        icon:'fab fa-twitter',
+        capture:'Twitter'
+    },
+    {
+        liClass:'',
+        aClass:'footer-link facebook',
+        icon:'fab fa-facebook',
+        capture:'Facebook'
+    },
+    {
+        liClass:'',
+        aClass:'footer-link finstagram',
+        icon:'fab fa-instagram',
+        capture:'Instagram'
+    },
+    {
+        liClass:'',
+        aClass:'footer-link google-plus',
+        icon:'fab fa-google-plus',
+        capture:'Google'
+    },
+];
 
-    <div class="picture product-img">
-      <img src="images/product-3.jpg" alt="name" class="img-fluid w-100">
-    </div>
+
+// Свойство HTMLElement.dataset предоставляет доступ как для чтения, так и для изменения пользовательских дата-атрибутов custom data attributes (data-*) , установленных у элемента. 
+// Свойство dataset доступно только для чтения. 
+// Для записи должны использоваться  его свойства, которые представлены data-атрибутами. 
+// HTML data-атрибут и соответствующий ему DOM-dataset.property не имеют одно и то же имя, но они всегда похожи.
+// Имя пользовательского дата атрибута в HTML начинается с "data-". Оно может состоять из букв, цифр и символов: дефис-минус (-, U+002D), точка (.), двоеточие (:), подчеркивание (_). Имя НЕ МОЖЕТ включать в себя заглавные буквы.
+
+// Имя пользовательского дата-атрибута в Javascript - это имя того же атрибута в HTML, но с использованием нотации camelCase и без дефисов, точек и т.д.
+
+function createProductMarkup(data) {
+    return `
+    <div class="col-xl-3 col-lg-4 col-sm-6">
+           <div class="product text-center" data-id="${data.id}">
+               <div class="position-relative mb-3">
+                   <a class="d-block" href="detail.html">
+                       <img class="img-fluid w-100 product-img" src="${data.image}" alt="...">
+                    </a>
+                    <div class="product-overlay">${makeLiGroup(overlayGroup, 'mb-0 list-inline')}</div>
+               </div>
+               <h6><a class="reset-anchor product-name" href="detail.html">${data.name}</a></h6>
+               <p class="small text-muted product-price" data-price="${data.price}">${data.price}</p>
+           </div>
+       </div>`;
+} 
+
+let makeLiGroup = (group, ulClass, header='') => {
+    let lis = '';
+    group.forEach(function(item){
+        lis+=`<li class="${item.liClass}">
+            <a class="${item.aClass}" href="#">
+                <i class="${item.icon}"></i> ${item.capture}
+            </a>
+        </li>`; 
+    });
+
+    return `
+        ${header}
+        <ul class="${ulClass}">
+            ${lis}
+        </ul>`;
+}
+
+
+document.querySelector('footer div.row').lastElementChild.innerHTML=makeLiGroup(socialGroup, 'list-unstyled footer-socials social-icon', '<h6 class="text-uppercase">Social media</h6>');  
+
+// 
+// В программировании анонимная функция (функциональный литерал, лямбда-абстракция или лямбда-выражение) - это определение функции, не привязанное к идентификатору.
+// У функции в обработчике события нет имени, она анонимна.
+document.getElementById("button").addEventListener("click", function (){
+})
+// Анонимные функции создаются и сразу же запускаются, так как находятся внутри колбэк функций. Именованные функции объявляются, а анонимные создаются при помощи оператора function. Анонимные функции могут выступать в качестве значения переменной (функциональные выражения):
+let look = function() {}
+// К таким функции можно обращаться по переменной, но сама функция остается анонимной. В качестве значения переменной также можно указать именованную функцию.
+
+// Стрелочные функции имеют более короткий синтаксис по сравнению с функциональными выражениями. 
+// Стрелочные функции всегда анонимные.
+//   (param1, param2, …, paramN) => { statements }
+//   (param1, param2, …, paramN) => expression
+  // эквивалентно: (param1, param2, …, paramN) => { return expression; }
+  // Круглые скобки не обязательны для единственного параметра:
+//   (singleParam) => { statements }
+//   singleParam => { statements }
+    // Функция без параметров нуждается в круглых скобках:
+//   () => { statements }
+//   () => expression 
+  // Эквивалентно: () => { return expression; }
+
+// краткий синтаксис, неявно возвращает результат
+let func = x => x * x;  
+// блочный синтаксис, явно возвращает результат
+let func = (x, y) => { 
+    return x + y; 
+}; 
+
+let empty = () => {}; // Пустая стрелочная функция возвращает undefined
+// Возвращаемые объектные строки (литералы) используют сокращённый синтаксис: 
+// params => {object:literal} будет работать не так, как ожидается.
+var func = () => { foo: 1 }; // Вызов func() возвращает undefined!
+var func = () => { foo: function() {} }; // SyntaxError: function statement requires a name
+
+// Это происходит потому что код в скобках ({}) распознаётся как цепочка выражений (т.е. foo трактуется как наименование, а не как ключ в объектной строке). 
+// Не забывайте оборачивать скобками объектные строки. var func = () => ({ foo: 1 });
+
+// Когда возвращаете литеральное выражение объекта, заключите тело в скобки
+  params => ({foo: bar})
+(() => 'foobar')(); // Вернёт "foobar"/ (Это Immediately Invoked Function Expression
+var simple = a => a > 15 ? 15 : a;
+simple(16); // 15
+let max = (a, b) => a > b ? a : b;
+// 
+
+let cart = [];
+const cartItems = document.querySelector(".cart-items");
+const clearCart = document.querySelector(".clear-cart");
+
+function addCartItem(item) {
+    const div = document.createElement("div");
+    div.classList.add("cart-item");
+    div.setAttribute('id', item.id);
+    div.innerHTML = `<!-- cart item -->
+        <div class="picture product-img">
+            <img src="${item.image}" alt="${item.name}" class="img-fluid w-100">
+        </div>
+        <div class="product-name p-auto">${item.name}</div>
+        <div class="remove-btn text-right">
+            <a class="reset-anchor m-auto" href="#">
+                <i class="fas fa-trash-alt" data-id=${item.id}></i>
+            </a>
+        </div>
+        <div class="quantity">
+            <div class="border d-flex justify-content-around mx-auto">
+                <i class="fas fa-caret-left inc-dec-btn" data-id=${item.id}></i>
+                <span class="border-1 p-1 amount">${item.amount}</span>
+                <i class="fas fa-caret-right inc-dec-btn" data-id=${item.id}></i>
+            </div>
+        </div>
+        <div class="price">
+            $<span class="product-price">${item.price}</span>
+        </div>
+    `;
+    cartItems.appendChild(div);
+}
+
+// sread
+// Spread syntax расширяет доступные для итерации элементы (массивы и строки) для функций, где ожидаемое количество аргументов для вызовов функций равно нулю или больше нуля, для элементов (литералов массива), для выражений объектов, где количество пар ключ-значение должно быть равно нулю или больше (для объектных литералов)
+// Для вызовов функций: myFunction(...iterableObj);
+// Для литералов массива или строк: [...iterableObj, '4', 'five', 6];
+// Для литералов объекта (ECMAScript 2018): let objClone = { ...obj };
+  // Поддерживаются Rest параметры и параметры по умолчанию
+//   (param1, param2, ...rest) => { statements }
+//   (param1 = defaultValue1, param2, …, paramN = defaultValueN) => { statements }
+    // Деструктуризация тоже поддерживается
+//   var f = ([a, b] = [1, 2], {x: c} = {x: a + b}) => a + b + c;
+//   f();  // 6
+
+
+// Деструктуризация означает извлечение данных из массивов или объектов. С помощью деструктуризации можно разбить сложный объект или массив на более мелкие части. Деструктуризация также дает возможность извлекать сразу несколько данных из объекта или массива, а также предоставляет возможность установить значение свойства по умолчанию, если оно еще не установлено.
+// Деструктуризация массивов:
+const scores = [85, 90, 74];
+const [maths, geography, biology] = scores;
+console.log(maths);
+console.log(geography);
+console.log(biology);
+// Используя простой литерал массива, можно деструктурировать массив. Элементы массива сохраняются в локальных переменных. Каждая из локальных переменных сопоставляется с соответствующим элементом массива.
+
+
+
+// 
+
+// Синтаксис для rest оператора выглядит так же, как и spread оператор, однако он используется для деструктуризации массивов и объектов. Фактически, rest оператор противоположен spread оператору: последний раскладывает массив на элементы, тогда как первый собирает много элементов в один. 
+
+function addToCarts() {
+    const addToCartButtons = [...document.querySelectorAll(".add-to-cart")];
+    addToCartButtons.forEach(button => {
+        button.addEventListener("click", event => {
+          // add to cart
+          let cartItem = { ...getProduct(event.target.closest('.product').getAttribute('data-id')), amount: 1 };
+          cart = [...cart, cartItem];
+          // add to DOM
+          addCartItem(cartItem);
+        });
+    });
+}
+
+// Одной из самых распространенных задач при работе с массивами является создание нового массива, который содержит определенный набор данных из заданного массива.
+// Метод filter() позволяет создать новый массив, элементы которого соответствуют условию заданному в пререданной функции.
+// Метод find()  возвращает значение первого элемента в массиве, который соответствует условию в переданной функции, или undefined, если ни один элемент не удовлетворяет условию в переданной функции.
+// операции над массивами:
+let arr = [5, 6, 13, 0, 1, 18, 23];
+let zero = arr.find(item => item == 0);
+let even = arr.filter(v => v % 2 == 0);
+
+
+function getProduct(id) {
+    return products.find(product => product.id === +(id));
+}
+
+function clear() {
+    cart = [];
+    while (cartItems.children.length > 0) {
+        cartItems.removeChild(cartItems.children[0]);
+    }
+}
+
+// Метод filter() не изменяет массив, для которого он был вызван.
+// Диапазон элементов, обрабатываемых методом filter(), устанавливается до первого вызова функции callback. Элементы, добавленные в массив после начала выполнения метода filter(), не будут обрабатываться функцией callback. Если существующие элементы массива изменятся, значения, переданные в функцию callback, будут значениями на тот момент времени, когда метод filter() посетит их; удалённые элементы обрабатываться не будут.
+// Основная идея метода filter():
+// - методу filter() передается функция, которая:
+//    - получает текущий элемент фильтруемого массива данных;
+//    - реализует логику обработки элемента;
+//    - возвращает логическое значение;
+// - если функция вернула истину, то текущий элемент будет добавлен в новый массив;
+// - иначе элемент пропускается;
+// - метод возвращает новый массив с отфильтрованными данными.
+
+const filterItem = (cart, curentItem) => cart.filter(item => item.id !== +(curentItem.dataset.id));
+
+const findItem = (cart, curentItem) => cart.find(item => item.id === +(curentItem.dataset.id));
+
+function renderCart() {
+
+    clearCart.addEventListener("click", () => {
+      clear();
+    });
     
-    <div class="product-name p-auto">Product name</div>
-    <div class="remove-btn text-right">
-      <a class="reset-anchor m-auto" href="#">
-        <i class="fas fa-trash-alt"></i>
-      </a>
-    </div>
-    <div class="quantity">
-      <div class="border d-flex justify-content-around mx-auto">
-        <i class="fas fa-caret-left inc-dec-btn"></i>
-        <span class="border-1 p-1 amount">1</span>
-        <i class="fas fa-caret-right inc-dec-btn"></i>
-      </div>
-    </div>
-    <div class="price">
-      $<span class="product-price">123</span>
-    </div>
-  </div> 
-*/}
-
-let cartItem = document.createElement("div");
-
-const picture = document.createElement('div');
-const imgFluid = document.createElement('img');
-const productName = document.createElement('div');
-
-
-
-const price = document.createElement('div');
-const productPrice = document.createElement('span');
-
-// createTextNode(text): создает и возвращает текстовый узел. 
-let productText = document.createTextNode("Joemalone Women prefume");
-// можем воспользоваться свойством textContent:
-productPrice.textContent = "$25";
-
-// Метод appendChild добавляет элемент в конец списка дочерних элементов родителя. 
-// Если элемент уже существует он удаляется из текущего родителя и вставляется заново.
-
-productName.appendChild(productText);
-
-imgFluid.setAttribute('src', "images/product-3.jpg");
-imgFluid.setAttribute('alt', "Joemalone Women prefume");
-imgFluid.className = "img-fluid w-100";
-
-picture.appendChild(imgFluid);
-price.appendChild(productPrice);
-
-cartItem.appendChild(picture);
-cartItem.appendChild(productName);
-cartItem.appendChild(price);
-
-document.querySelector('.cart-items').appendChild(cartItem);
-
-
-// Метод parent.insertBefore(узел, место вставки)
-// узел - Ссылка на вставляемый узел.
-// место вставки - Ссылка на элемент, перед которым необходимо вставить новый узел. Если аргумент равен null, то узел вставляется в конец родителя (то есть сработает, как appendChild()).
-// Данный метод позволяет вставить элемент в любое место, а не только в конец родителя.
-
-const quantity = document.createElement('div');
-const border = document.createElement('div');
-const caretLeft = document.createElement('i');
-const amount = document.createElement('span');
-const caretRight = document.createElement('i');
-
-quantity.className = "quantity";
-
-// parent
-border.className = "border d-flex justify-content-around mx-auto";
-amount.className = "border-1 p-1 amount";
-amount.textContent = 1;
-border.appendChild(amount);
-
-caretLeft.className = "fas fa-caret-left inc-dec-btn";
-caretRight.className = "fas fa-caret-right inc-dec-btn";
-
-// Вставка в самое начало родителя, то есть перед первым узлом
-border.insertBefore(caretLeft, border.firstChild);
-
-// Вставка в конец родителя, аналогично appendChild()
-// border.appendChild(caretRight);
-border.insertBefore(caretRight, null);
-
-quantity.appendChild(border);
-
-
-// Добавить новый узел в документ можно простой вставкой HTML-кода в виде строки. Для этого используется метод insertAdjacentHTML().
-// parent.insertAdjacentHTML(место вставки, HTML-код)
-// место вставки - Позиция, куда необходимо вставить код. Это место указывается относительно самого элемента и может иметь одно из следующих значений:
-// beforebegin - непосредственно перед открывающим тегом.
-// afterbegin - сразу после открывающего тега.
-// beforeend - непосредственно перед закрывающим тегом.
-// afterend - сразу после закрывающего тега.
-
-let parent = document.querySelector('.cart-item');
-
-parent.querySelector('.product-name').insertAdjacentHTML('beforeend', '<div class="remove-btn text-right"><a class="reset-anchor m-auto" href="#"><i class="fas fa-trash-alt"></i></a></div>');
-
-
-// Метод replaceChild() удаляет один узел и вставляет на его место новый.
-// parent.replaceChild(новый узел, старый узел)
-// новый узел - Ссылка на вставляемый узел.
-// старый узел - Ссылка на удаляемый узел.
-
-// let li1 = document.querySelector('li.list-inline-item'); // ссылка на 1 существующий элемент
-// console.log(li1);
-
-// let li2 = li1.nextSibling; // ссылка на 2 существующий элемент
-// console.log(li2);
-
-// // Метод возвращает ссылку на удаленный узел.
-// let replaceLi = ul.replaceChild(li1, li2); // заменяем элемент li1 на li2
-
-// ul.insertBefore(replaceLi, li1);
-
-
-// Браузер содержимое тега <script> считает простым текстом, а так как в атрибуте type у него указан неизвестный ему MIME-тип, то интерпретировать или отображать он его не станет. 
-//<script id="template-item" type="text/template">
-// </script>
-
-// Содержимое тега script можно получить после загрузки документа, обратившись к нему по id.
-
-// let templateSource = document.getElementById("template-item").innerHTML;      
-
-// const section = document.createElement("section");
-// section.classList = "text-center border border-light p-5 my-3";
-
-// section.innerHTML = templateSource;
-// document.querySelector('.container').appendChild(section);
-
-
-let content = document.getElementById("cartItem").content;  
-// document.querySelector('.cart-items').appendChild(content);
-
-// Для использования template его необходимо активировать. 
-
-let addToCart = document.querySelector('.add-to-cart');
-
-addToCart.addEventListener('click', function(){
-    document.querySelector('.cart-items').appendChild(content);
-});
-
-// Самый простой способ активации заключается в создании deep copy свойства .content с использованием метода  document.importNode().  Свойство .content является read-only.
-
-// addToCart.addEventListener('click', function(){
-//     document.querySelector('.cart-items').append(document.importNode(content, true));
-// });
-
-
-// const product = {
-//   id:1,
-//   image:"images/product-1.jpg",
-//   name:"Kui Ye Chen’s AirPods",
-//   price:123
-// };
-
-// for (let key in product) { 
-//   console.log(key + ': ' + product[key]);
-// }
-
-// products.forEach(function(item) {
-//   console.log(item);
-// });
- 
-
-// // Чтобы создать шаблонную строку, необходимо использовать символ обратной кавычки (`):
-
-// let newString = `A string`;
-
-// // Шаблонные строки позволяют записывать значения переменных на нескольких строках. 
-// // В отличие от обычных строк, в шаблонных строках можно использовать символы переноса строк:
-
-// let listInline= `
-// <ul class="mb-0 list-inline">
-//   <li class="list-inline-item m-0 p-0">
-//       <a class="btn btn-sm btn-outline-dark" href="#"><i class="far fa-heart"></i></a>
-//   </li>
-//   <li class="list-inline-item m-0 p-0">
-//       <a class="btn btn-sm btn-dark add-to-cart" href="#">Add to cart</a>
-//   </li>
-//   <li class="list-inline-item mr-0">
-//       <a class="btn btn-sm btn-outline-dark" href="#"><i class="fas fa-expand"></i></a>
-//   </li>
-// </ul>
-// `;
-// // Все пробельные символы в шаблонной строке, включая переносы строк и отступы, включаются «как есть» в результат.
-
-// let productHtml = `
-// <div class="col-xl-3 col-lg-4 col-sm-6">
-// <div class="product text-center">
-//   <div class="position-relative mb-3">
-
-//       <a class="d-block" href="detail.html"><img class="img-fluid w-100 product-img"
-//               src="images/product-1.jpg" alt="..."></a>
-//       <div class="product-overlay">
-//           <ul class="mb-0 list-inline">
-//               <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark"
-//                       href="#"><i class="far fa-heart"></i></a></li>
-//               <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart"
-//                       href="#">Add to cart</a></li>
-//               <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i
-//                           class="fas fa-expand"></i></a>
-//               </li>
-//           </ul>
-//       </div>
-//   </div>
-//   <h6> <a class="reset-anchor product-name" href="detail.html">Kui Ye Chen’s AirPods</a></h6>
-//   <p class="small text-muted product-price">$250</p>
-// </div>
-// </div>
-// `;
-
-// // Выражения: ${expression}. 
-
-// // Синтаксис ${} позволяет вставить в скобки выражение, которое передаст свое значение. Можно использовать обычную строку.
-// console.log(`${"Kui Ye Chen’s AirPods"}`);
-
-// let name = "Kui Ye Chen’s AirPods";
-// console.log(`${name}`);
-
-// // В выражениях можно проводить любые математические операции.
-// let price = 19.99;
-// let q = 5;
-// let prod = `The price of ${name} is ${price * q}`;
-
-// // Выражения можно использовать и с более сложными объектами.
-
-// let makeProduct = {
-//   id:1,
-//   image:"images/product-1.jpg",
-//   name:"Kui Ye Chen’s AirPods",
-//   price:123,
-//   renderProduct() {
-//       return `
-//       <div class="col-xl-3 col-lg-4 col-sm-6">
-//           <div class="product text-center">
-//               <div class="position-relative mb-3">
-//                   <a class="d-block" href="detail.html">
-//                       <img class="img-fluid w-100 product-img" src="${this.image}" alt="...">
-//                       </a>
-//                   <div class="product-overlay">
-//                       <ul class="mb-0 list-inline">
-//                           <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark"
-//                                   href="#"><i class="far fa-heart"></i></a></li>
-//                           <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart"
-//                                   href="#">Add to cart</a></li>
-//                           <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i
-//                                       class="fas fa-expand"></i></a>
-//                           </li>
-//                       </ul>
-//                   </div>
-//               </div>
-//               <h6> <a class="reset-anchor product-name" href="detail.html">${this.name}</a></h6>
-//               <p class="small text-muted product-price">${this.price}</p>
-//           </div>
-//       </div>
-//       `;
-//   }
-// };
-
-// console.log(makeProduct.renderProduct());
-
-//   // на основе шаблонных строк можно делать HTML шаблоны.
-//   let data = {
-//       id:1,
-//       image:"images/product-1.jpg",
-//       name:"Kui Ye Chen’s AirPods",
-//       price:123
-//   };
-  
-//   // создадим разметку
-//   function createMarkup(data) {
-//    return `
-//    <div class="col-xl-3 col-lg-4 col-sm-6">
-//           <div class="product text-center">
-//               <div class="position-relative mb-3">
-//                   <a class="d-block" href="detail.html">
-//                       <img class="img-fluid w-100 product-img" src="${data.image}" alt="...">
-//                       </a>
-//                   <div class="product-overlay">
-//                       <ul class="mb-0 list-inline">
-//                           <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-outline-dark"
-//                                   href="#"><i class="far fa-heart"></i></a></li>
-//                           <li class="list-inline-item m-0 p-0"><a class="btn btn-sm btn-dark add-to-cart"
-//                                   href="#">Add to cart</a></li>
-//                           <li class="list-inline-item mr-0"><a class="btn btn-sm btn-outline-dark" href="#"><i
-//                                       class="fas fa-expand"></i></a>
-//                           </li>
-//                       </ul>
-//                   </div>
-//               </div>
-//               <h6> <a class="reset-anchor product-name" href="detail.html">${data.name}</a></h6>
-//               <p class="small text-muted product-price">${data.price}</p>
-//           </div>
-//       </div>
-//    `
-//   }
-
-//   // document.querySelector('.row').innerHTML = createMarkup(data);
-  
-//   // let res = '';
-//   // products.forEach(function(item) {
-//   //     res+=createMarkup(item);
-//   // });
-//   // document.querySelector('.row').innerHTML = res;
-
-  
-//   function socIcon(className, icon, capture='') { 
-//       return `<li class="list-inline-item m-0 p-0 ${className}"><a class="btn btn-sm btn-outline-dark"
-//       href="#"><i class="far ${icon}"></i> ${capture}</a></li>
-//      `; 
-//   }
-//   // let icon = 'fa-heart';
-//   // console.log(`Something is ${socIcon('fa-heart')}.`);
-
-//   function createNewMarkup(data) {
-//       return `
-//       <div class="col-xl-3 col-lg-4 col-sm-6">
-//              <div class="product text-center">
-//                  <div class="position-relative mb-3">
-//                      <a class="d-block" href="detail.html">
-//                          <img class="img-fluid w-100 product-img" src="${data.image}" alt="...">
-//                          </a>
-//                      <div class="product-overlay">
-//                          <ul class="mb-0 list-inline">
-//                          ${socIcon('like-this','fa-heart', )}
-//                          ${socIcon('add-to-cart','fa-shopping-cart', 'Add to cart')}
-//                          ${socIcon('view-this','fa-expand')}
-//                          </ul>
-//                      </div>
-//                  </div>
-//                  <h6> <a class="reset-anchor product-name" href="detail.html">${data.name}</a></h6>
-//                  <p class="small text-muted product-price">${data.price}</p>
-//              </div>
-//          </div>
-//       `
-//      }
- 
-//   document.querySelector('.row').innerHTML = createNewMarkup(data);
+    cartItems.addEventListener("click", event => {
+      if (event.target.classList.contains("fa-trash-alt")) {
+        cart = filterItem(cart, event.target);
+        cartItems.removeChild(event.target.parentElement.parentElement.parentElement);
+      } else if (event.target.classList.contains("fa-caret-right")) {
+        let tempItem = findItem(cart, event.target);
+        tempItem.amount = tempItem.amount + 1;
+        event.target.previousElementSibling.innerText = tempItem.amount;
+      } else if (event.target.classList.contains("fa-caret-left")) {
+        let tempItem = findItem(cart, event.target);
+        tempItem.amount = tempItem.amount - 1;
+        if (tempItem.amount > 0) {
+        event.target.nextElementSibling.innerText = tempItem.amount;
+        } else {
+          cart = filterItem(cart, event.target);
+          cartItems.removeChild(event.target.parentElement.parentElement.parentElement);
+        }
+      }
+    });
+  }
