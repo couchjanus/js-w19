@@ -9,7 +9,7 @@ const clearCart = document.querySelector(".clear-cart");
 const cartItems = document.querySelector(".cart-items");
 let cart = [];
 
-function createProductMarkup(data) {
+function createProduct(data) {
     return `
     <div class="col-xl-3 col-lg-4 col-sm-6">
         <div class="product text-center" data-id="${data.id}">
@@ -53,7 +53,7 @@ function addCartItem(item) {
         </div>
         <div class="prices">
             <span class="price">$<span class="product-price">${item.price}</span></span>
-            <span class="subtotal">$<span class="product-subtotal"></span></span>
+            <span class="subtotal">Total: $<span class="product-subtotal"></span></span>
         </div>
     `;
     cartItems.appendChild(div);
@@ -68,7 +68,7 @@ function subtotals(){
     for (let item of itemsInCart) {
         const price = item.querySelector('.product-price').textContent;
         let quantity = item.querySelector('.quantity').textContent;
-        item.querySelector('.subtotal').textContent=quantity*price;
+        item.querySelector('.product-subtotal').textContent=quantity*price;
     };
 }
 
@@ -136,37 +136,30 @@ function renderCart() {
 
 // ==============================
 (function(){
-    sidebarToggle.addEventListener("click", function () {
-        sidebar.classList.toggle("show-sidebar");
-    });
-
-    closeBtn.addEventListener("click", function () {
-        sidebar.classList.remove("show-sidebar");
-    });
+    sidebarToggle.addEventListener("click", () => sidebar.classList.toggle("show-sidebar"));
+    closeBtn.addEventListener("click", () => sidebar.classList.remove("show-sidebar"));
 
     let result = '';
     products.forEach(function(item) {
-        result+=createProductMarkup(item);
+        result+=createProduct(item);
     });
     document.querySelector('.showcase').innerHTML = result;
-    // 
 
     addToCarts();
     renderCart();
-
     
-    // let  likeIt = document.querySelectorAll('.like-it'); 
-    // for(let i = 0; i < likeIt.length; i++){
-    //         likeIt[i].addEventListener('click', function(){
+    let  likeIt = document.querySelectorAll('.like-it'); 
+    for(let i = 0; i < likeIt.length; i++){
+            likeIt[i].addEventListener('click', function(){
                 
-    //             +likeMe.textContent++;
-    //             if (+likeMe.textContent>0){
-    //                 likeMe.classList.add('notempty');
-    //             } else {
-    //                 likeMe.classList.remove('notempty');
-    //             }
-    //     });
+                +likeMe.textContent++;
+                if (+likeMe.textContent>0){
+                    likeMe.classList.add('notempty');
+                } else {
+                    likeMe.classList.remove('notempty');
+                }
+        });
 
-    // }
+    }
 
 })();

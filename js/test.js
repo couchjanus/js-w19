@@ -1,53 +1,4 @@
 'use strict';
-const overlayGroup = [
-    {
-        liClass:'list-inline-item m-0 p-0 like-this',
-        aClass:'btn btn-sm btn-outline-dark',
-        icon:'fas fa-heart',
-        capture:''
-    },
-    {
-        liClass:'list-inline-item m-0 p-0 add-to-cart',
-        aClass:'btn btn-sm btn-outline-dark',
-        icon:'fas fa-dolly-flatbed',
-        capture:'Add to cart'
-    },
-    {
-        liClass:'list-inline-item m-0 p-0 view-this',
-        aClass:'btn btn-sm btn-outline-dark',
-        icon:'fas fa-expand',
-        capture:''
-    },
-];
-
-
-const socialGroup = [
-    {
-        liClass:'',
-        aClass:'footer-link twitter',
-        icon:'fab fa-twitter',
-        capture:'Twitter'
-    },
-    {
-        liClass:'',
-        aClass:'footer-link facebook',
-        icon:'fab fa-facebook',
-        capture:'Facebook'
-    },
-    {
-        liClass:'',
-        aClass:'footer-link finstagram',
-        icon:'fab fa-instagram',
-        capture:'Instagram'
-    },
-    {
-        liClass:'',
-        aClass:'footer-link google-plus',
-        icon:'fab fa-google-plus',
-        capture:'Google'
-    },
-];
-
 
 // Свойство HTMLElement.dataset предоставляет доступ как для чтения, так и для изменения пользовательских дата-атрибутов custom data attributes (data-*) , установленных у элемента. 
 // Свойство dataset доступно только для чтения. 
@@ -57,7 +8,7 @@ const socialGroup = [
 
 // Имя пользовательского дата-атрибута в Javascript - это имя того же атрибута в HTML, но с использованием нотации camelCase и без дефисов, точек и т.д.
 
-function createProductMarkup(data) {
+function createProduct(data) {
     return `
     <div class="col-xl-3 col-lg-4 col-sm-6">
            <div class="product text-center" data-id="${data.id}">
@@ -73,27 +24,6 @@ function createProductMarkup(data) {
        </div>`;
 } 
 
-let makeLiGroup = (group, ulClass, header='') => {
-    let lis = '';
-    group.forEach(function(item){
-        lis+=`<li class="${item.liClass}">
-            <a class="${item.aClass}" href="#">
-                <i class="${item.icon}"></i> ${item.capture}
-            </a>
-        </li>`; 
-    });
-
-    return `
-        ${header}
-        <ul class="${ulClass}">
-            ${lis}
-        </ul>`;
-}
-
-
-document.querySelector('footer div.row').lastElementChild.innerHTML=makeLiGroup(socialGroup, 'list-unstyled footer-socials social-icon', '<h6 class="text-uppercase">Social media</h6>');  
-
-// 
 // В программировании анонимная функция (функциональный литерал, лямбда-абстракция или лямбда-выражение) - это определение функции, не привязанное к идентификатору.
 // У функции в обработчике события нет имени, она анонимна.
 document.getElementById("button").addEventListener("click", function (){
@@ -193,11 +123,7 @@ console.log(geography);
 console.log(biology);
 // Используя простой литерал массива, можно деструктурировать массив. Элементы массива сохраняются в локальных переменных. Каждая из локальных переменных сопоставляется с соответствующим элементом массива.
 
-
-
-// 
-
-// Синтаксис для rest оператора выглядит так же, как и spread оператор, однако он используется для деструктуризации массивов и объектов. Фактически, rest оператор противоположен spread оператору: последний раскладывает массив на элементы, тогда как первый собирает много элементов в один. 
+// Синтаксис rest оператора выглядит так же, как и spread оператор, однако он используется для деструктуризации массивов и объектов. Фактически, rest оператор противоположен spread оператору: последний раскладывает массив на элементы, тогда как первый собирает много элементов в один. 
 
 function addToCarts() {
     const addToCartButtons = [...document.querySelectorAll(".add-to-cart")];
@@ -212,7 +138,6 @@ function addToCarts() {
     });
 }
 
-// Одной из самых распространенных задач при работе с массивами является создание нового массива, который содержит определенный набор данных из заданного массива.
 // Метод filter() позволяет создать новый массив, элементы которого соответствуют условию заданному в пререданной функции.
 // Метод find()  возвращает значение первого элемента в массиве, который соответствует условию в переданной функции, или undefined, если ни один элемент не удовлетворяет условию в переданной функции.
 // операции над массивами:
@@ -273,3 +198,5 @@ function renderCart() {
       }
     });
   }
+      
+     
