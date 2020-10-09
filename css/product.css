@@ -90,12 +90,3 @@
 .bg-center {
     background-position: center center !important;
 }
-  
-.reset-anchor {
-    color: inherit;
-    transition: all 0.3s;
-}
-  
-.reset-anchor:hover, .reset-anchor:focus {
-    text-decoration: none;
-}

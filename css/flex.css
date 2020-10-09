@@ -454,10 +454,6 @@
     margin-left: 1rem;
 }
 
-.border input{
-    width:2rem;
-}
-
 .prices{
     grid-row: 3 / 4;
     grid-column: 2 / 4;
@@ -474,3 +470,5 @@
     margin-left: 4rem;
     text-align: right;
 }
+
+
