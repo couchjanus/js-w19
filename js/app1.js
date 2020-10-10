@@ -7,6 +7,10 @@ class Storage {
       let products = JSON.parse(localStorage.getItem("products"));
       return products.find(product => product.id === +(id));
     }
+    static getProducts() {
+        return JSON.parse(localStorage.getItem("products"));
+    }
+
     static saveCart(cart) {
       localStorage.setItem("basket", JSON.stringify(cart));
     }
@@ -24,7 +28,8 @@ class Product {
                 const price = item.price;
                 const id = item.id;
                 const image = item.image;
-                return { name, price, id, image };
+                const category = item.category;
+                return { name, price, id, image, category };
         });
     }
 }
@@ -43,6 +48,9 @@ class App{
         closeBtn.addEventListener("click", () => this.closeCart());
         sidebarToggle.addEventListener("click", () => this.openCart());
 
+        if (document.querySelector('.collections')){
+            this.makeCategories(categories);
+        }
         this.makeShowcase(products);
 
         let data = new Product();
@@ -58,7 +66,7 @@ class App{
         this.cart = Storage.getCart();
         this.populateCart(this.cart);
         this.setCartTotal(this.cart);
-        this.subtotals();
+        
     }
 
     closeCart() {
@@ -99,7 +107,7 @@ class App{
     addCartItem(item) {
         const div = document.createElement("div");
         div.classList.add("cart-item");
-        div.setAttribute('id', item.id);
+        div.setAttribute('id', 'id'+item.id);
         div.innerHTML = `
             <div class="picture product-img">
                 <img src="${item.image}" alt="${item.name}" class="img-fluid w-100">
@@ -150,8 +158,6 @@ class App{
                     }
                 }
                 Storage.saveCart(this.cart);
-                this.setCartTotal(this.cart);
-                this.subtotals();
             });
         });
     }
@@ -161,7 +167,7 @@ class App{
         while (this.cartItems.children.length > 0) {
             this.cartItems.removeChild(this.cartItems.children[0]);
         }
-        this.subtotals();
+        
         this.setCartTotal(this.cart);
         Storage.saveCart(this.cart);
     }
@@ -189,29 +195,30 @@ class App{
         this.clearCart.addEventListener("click", ()=>this.clear());
         
         this.cartItems.addEventListener("click", event=>{
+            // event.preventDefault();
             if (event.target.classList.contains("fa-trash-alt")){
                 this.cart = this.filterItem(this.cart, event.target);
-                this.subtotals();
+                event.target.closest('.cart-item').remove();
                 this.setCartTotal(this.cart);
                 Storage.saveCart(this.cart);
-                this.cartItems.removeChild(event.target.parentElement.parentElement.parentElement);
+                
             } else if (event.target.classList.contains("fa-caret-right")) {
                 let tempItem = this.findItem(this.cart, event.target);
                 tempItem.amount = tempItem.amount + 1;
-                this.subtotals();
+                
                 this.setCartTotal(this.cart);
                 Storage.saveCart(this.cart);
                 event.target.previousElementSibling.innerText = tempItem.amount;
             } else if (event.target.classList.contains("fa-caret-left")) {
                 let tempItem = this.findItem(this.cart, event.target);
-                tempItem.amount = tempItem.amount - 1;
-                if (tempItem.amount > 0) {
-                event.target.nextElementSibling.innerText = tempItem.amount;
+                if (tempItem !== undefined && tempItem.amount > 1) {
+                    tempItem.amount = tempItem.amount - 1;
+                    event.target.nextElementSibling.innerText = tempItem.amount;
                 } else {
-                this.cart = this.filterItem(this.cart, event.target);
-                this.cartItems.removeChild(event.target.parentElement.parentElement.parentElement);
+                    this.cart = this.filterItem(this.cart, event.target);
+                    event.target.closest('.cart-item').remove();
                 }
-                this.subtotals();
+                
                 this.setCartTotal(this.cart);
                 Storage.saveCart(this.cart);
             }
@@ -220,32 +227,153 @@ class App{
     // =======================
 
     setCartTotal(cart) {
-        let tempTotal = 0;
-        let itemsTotal = 0;
+        let tmpTotal = 0;
         cart.map(item => {
-          tempTotal += item.price * item.amount;
-          itemsTotal += item.amount;
+            tmpTotal = item.price * item.amount;
+            this.cartItems.querySelector(`#id${item.id} .product-subtotal`).textContent=parseFloat(tmpTotal.toFixed(2));
         });
-        this.cartTotal.textContent = parseFloat(tempTotal.toFixed(2));
-        this.countItems.textContent = itemsTotal;
+
+        this.cartTotal.textContent = parseFloat(cart.reduce((previous, current) => previous + current.price * current.amount, 0).toFixed(2));
+        this.countItems.textContent = cart.reduce((previous, current) => previous + current.amount, 0);
     }
-    subtotals(){
-        let itemsInCart = document.querySelectorAll('.cart-item');
-        for (let item of itemsInCart) {
-            const price = item.querySelector('.product-price').textContent;
-            let quantity = item.querySelector('.quantity').textContent;
-            item.querySelector('.product-subtotal').textContent=quantity*price;
-        };
-    }
+    
     populateCart(cart) {
         cart.forEach(item => this.addCartItem(item));
     }
+
+    renderCategory(){
+        const categories = document.querySelector('.categories');
+        categories.addEventListener('click', (event)=> {
+                event.preventDefault();
+                const target = event.target;
+
+                if (target.classList.contains('category-item')) {
+                    const category = target.dataset.category;
+                    const categoryFilter = items => items.filter(item => item.category.includes(category));
+                    this.makeShowcase(categoryFilter(Storage.getProducts()));
+                } else {
+                    this.makeShowcase(Storage.getProducts());
+                }
+                this.addToCarts();
+                this.renderCart();
+        });
+    }
+
+    createCategory(category){
+        return `
+        <a class="category-item" data-category="${category.name}" href="#">
+            <img class="img-fluid" src="${category.image}" alt="${category.name}"><strong class="category-item-title category-item" data-category="${category.name}">${
+            category.name.replace(category.name[0], category.name[0].toUpperCase())}</strong>
+        </a>`;
+    }
+
+    makeCategories(categories) {
+        for (let i=0; i<3; i++){
+            let div = document.createElement('div');
+            div.className = "col-md-4";
+            if (i<2){
+                div.classList.add(['mb-4', 'mb-md-0']);
+            } 
+            if(i==0){
+                div.innerHTML = this.createCategory(categories[i]);
+            } else if(i==1){
+                div.innerHTML = this.createCategory(categories[i])+this.createCategory(categories[i+1]);
+            } else if(i == 2){
+                div.innerHTML = this.createCategory(categories[i+1]);
+            }
+            document.querySelector('.categories').append(div);
+        }
+    }
 }
+
+
+function categoriesList(categories){
+    let result = '';
+    categories.forEach(item=>{
+        result+=`<li class="mb-2"><a class="reset-anchor category-item" href="#" data-category="${item.name}">${item.name}</a></li>`;
+    })
+    document.querySelector('.categories-list').innerHTML = result;
+} 
+
+
+
+
+
 
 // ==============================
 (function(){
     const app = new App();
+
+    if(document.querySelector('.categories-list')){
+        categoriesList(categories);
+    }
+
+    function compareValues(key, order = 'asc') {
+        return function innerSort(a, b) {
+          if (!a.hasOwnProperty(key) || !b.hasOwnProperty(key)) {
+            return 0;
+          }
+      
+          const varA = (typeof a[key] === 'string')
+            ? a[key].toUpperCase() : a[key];
+          const varB = (typeof b[key] === 'string')
+            ? b[key].toUpperCase() : b[key];
+      
+          let comparison = 0;
+          if (varA > varB) {
+            comparison = 1;
+          } else if (varA < varB) {
+            comparison = -1;
+          }
+          return (
+            (order === 'desc') ? (comparison * -1) : comparison
+          );
+        };
+      }
+      
+    
+    if (document.querySelector(".selectpicker")){
+        let selectpicker = document.querySelector(".selectpicker");
+        selectpicker.addEventListener('change', function() {
+            console.log('You selected: ', this.value);
+            switch(this.value){
+                case 'low-high':
+                    app.makeShowcase(Storage.getProducts().sort(compareValues('price', 'asc')));
+                    break;
+                case 'high-low':
+                    app.makeShowcase(Storage.getProducts().sort(compareValues('price', 'desc')));
+                    break;
+                case 'popularity':
+                    app.makeShowcase(Storage.getProducts().sort(compareValues('id', 'desc')));
+                    break;
+                default:
+                    app.makeShowcase(Storage.getProducts().sort(compareValues('id', 'asc')));
+                    break;
+            }
+            app.addToCarts();
+            app.renderCategory();
+        });
+    }
+
     app.addToCarts();
+    app.renderCategory();
     app.renderCart();
     app.renderLike();
+    // Выбор определенной категории
+                // const chooseCategory = event => {
+                //     event.preventDefault();
+                //     const target = event.target;
+
+                //     if (target.classList.contains('category-item')) {
+                //         const category = target.dataset.category;
+                //         const categoryFilter = items => items.filter(item => item.category.includes(category));
+                //         app.makeShowcase(categoryFilter(products));
+                //     } else {
+                //         app.makeShowcase(products);
+                //     }
+                //     app.addToCarts();
+                //     app.renderCart();
+                // };
+                // categories.addEventListener('click', chooseCategory);
+    
 })();

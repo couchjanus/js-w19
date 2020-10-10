@@ -1,22 +1,74 @@
 "use strict"
+class Storage {
+    static saveProducts(products) {
+      localStorage.setItem("products", JSON.stringify(products));
+    }
+    static getProduct(id) {
+      let products = JSON.parse(localStorage.getItem("products"));
+      return products.find(product => product.id === +(id));
+    }
+    static saveCart(cart) {
+      localStorage.setItem("basket", JSON.stringify(cart));
+    }
+    static getCart() {
+      return localStorage.getItem("basket")
+        ? JSON.parse(localStorage.getItem("basket"))
+        : [];
+    }
+}
+
+class Product {
+    getProducts() {
+        return products.map(item => {
+                const name = item.name;
+                const price = item.price;
+                const id = item.id;
+                const image = item.image;
+                return { name, price, id, image };
+        });
+    }
+}
 
 class App{
     cart = [];
     cartItems = document.querySelector(".cart-items");
     clearCart = document.querySelector(".clear-cart");
+    sidebar = document.querySelector(".sidebar");
+    cartTotal = document.querySelector(".cart-total");
+    countItems = document.querySelector('.count-items-in-cart');
     constructor() { 
         const sidebarToggle = document.querySelector(".sidebar-toggle");
         const closeBtn = document.querySelector(".close-btn");
-        const sidebar = document.querySelector(".sidebar");
-        sidebarToggle.addEventListener("click", () => sidebar.classList.toggle("show-sidebar"));
-        closeBtn.addEventListener("click", () => sidebar.classList.remove("show-sidebar"));
+
+        closeBtn.addEventListener("click", () => this.closeCart());
+        sidebarToggle.addEventListener("click", () => this.openCart());
+
         this.makeShowcase(products);
+
+        let data = new Product();
+        Storage.saveProducts(data.getProducts());
+        
+        this.cart = Storage.getCart();
+    }
+    // Methods for Class App
+    openCart() {
+        document.querySelector(".overlay").classList.add("active");
+        this.sidebar.classList.toggle("show-sidebar");
+        this.cartItems.innerHTML='';
+        this.cart = Storage.getCart();
+        this.populateCart(this.cart);
+        this.setCartTotal(this.cart);
+        this.subtotals();
     }
 
-    // methods
-    getProduct = (id) => products.find(product => product.id === +(id));
+    closeCart() {
+        this.sidebar.classList.remove("show-sidebar");
+        document.querySelector(".overlay").classList.remove("active");
+    }
+    
+    getProduct = (id)=>products.find(product=>product.id === +(id));
 
-    createProduct = (data) =>
+    createProduct = (data)=>
         `
         <div class="col-xl-3 col-lg-4 col-sm-6">
             <div class="product text-center" data-id="${data.id}">
@@ -72,33 +124,34 @@ class App{
         `;
         this.cartItems.appendChild(div);
     }
-    
-    subtotals(){
-        let itemsInCart = document.querySelectorAll('.cart-item');
-        for (let item of itemsInCart) {
-            const price = item.querySelector('.product-price').textContent;
-            let quantity = item.querySelector('.quantity').textContent;
-            item.querySelector('.product-subtotal').textContent=quantity*price;
-        };
-    }
-    
+
     addToCarts() {
         const addToCartButtons = [...document.querySelectorAll(".add-to-cart")];
         const countItemsInCart = document.querySelector('.count-items-in-cart');
         addToCartButtons.forEach(button => {
             button.addEventListener("click", event => {
-              // add to cart
-              let cartItem = { ...this.getProduct(event.target.closest('.product').getAttribute('data-id')), amount: 1 };
-              this.cart = [...this.cart, cartItem];
-              // add to DOM
-              this.addCartItem(cartItem);
-              +countItemsInCart.textContent++;
-              if (+countItemsInCart.textContent>0){
-                countItemsInCart.classList.add('notempty');
-              } else {
-                countItemsInCart.classList.remove('notempty');
-              }
-              this.subtotals();
+                let product = this.getProduct(event.target.closest('.product').getAttribute('data-id'));
+
+                let exist = this.cart.some(elem => elem.id === product.id);
+                if(exist){
+                    this.cart.forEach(elem => {
+                        if(elem.id === product.id){
+                          elem.amount += 1;
+                        }
+                    })
+                }else {
+                    let cartItem = { ...product, amount: 1 };
+                    this.cart = [...this.cart, cartItem];
+                    +countItemsInCart.textContent++;
+                    if (+countItemsInCart.textContent>0){
+                      countItemsInCart.classList.add('notempty');
+                    } else {
+                      countItemsInCart.classList.remove('notempty');
+                    }
+                }
+                Storage.saveCart(this.cart);
+                this.setCartTotal(this.cart);
+                this.subtotals();
             });
         });
     }
@@ -109,40 +162,13 @@ class App{
             this.cartItems.removeChild(this.cartItems.children[0]);
         }
         this.subtotals();
+        this.setCartTotal(this.cart);
+        Storage.saveCart(this.cart);
     }
-    
+
     filterItem = (cart, curentItem) => cart.filter(item => item.id !== +(curentItem.dataset.id));
     
     findItem = (cart, curentItem) => cart.find(item => item.id === +(curentItem.dataset.id));
-    
-    renderCart() {
-        // const clearCart = document.querySelector(".clear-cart");
-        this.clearCart.addEventListener("click", () => this.clear());
-        
-        this.cartItems.addEventListener("click", event => {
-          if (event.target.classList.contains("fa-trash-alt")) {
-            this.cart = this.filterItem(this.cart, event.target);
-            this.cartItems.removeChild(event.target.parentElement.parentElement.parentElement);
-            this.subtotals();
-          } else if (event.target.classList.contains("fa-caret-right")) {
-            let tempItem = this.findItem(this.cart, event.target);
-            tempItem.amount = tempItem.amount + 1;
-            event.target.previousElementSibling.innerText = tempItem.amount;
-            this.subtotals();
-          } else if (event.target.classList.contains("fa-caret-left")) {
-            let tempItem = this.findItem(this.cart, event.target);
-            tempItem.amount = tempItem.amount - 1;
-            if (tempItem.amount > 0) {
-                event.target.nextElementSibling.innerText = tempItem.amount;
-            } else {
-              this.cart = this.filterItem(this.cart, event.target);
-              this.cartItems.removeChild(event.target.parentElement.parentElement.parentElement);
-            }
-            this.subtotals();
-          }
-        });
-    }
-
     renderLike() {
         const likeMe = document.querySelector(".like-me");    
         let  likeIt = [...document.querySelectorAll(".like-it")];
@@ -157,14 +183,69 @@ class App{
             });
         });
     }
+    
+    renderCart() {
+
+        this.clearCart.addEventListener("click", ()=>this.clear());
+        
+        this.cartItems.addEventListener("click", event=>{
+            if (event.target.classList.contains("fa-trash-alt")){
+                this.cart = this.filterItem(this.cart, event.target);
+                this.subtotals();
+                this.setCartTotal(this.cart);
+                Storage.saveCart(this.cart);
+                this.cartItems.removeChild(event.target.parentElement.parentElement.parentElement);
+            } else if (event.target.classList.contains("fa-caret-right")) {
+                let tempItem = this.findItem(this.cart, event.target);
+                tempItem.amount = tempItem.amount + 1;
+                this.subtotals();
+                this.setCartTotal(this.cart);
+                Storage.saveCart(this.cart);
+                event.target.previousElementSibling.innerText = tempItem.amount;
+            } else if (event.target.classList.contains("fa-caret-left")) {
+                let tempItem = this.findItem(this.cart, event.target);
+                tempItem.amount = tempItem.amount - 1;
+                if (tempItem.amount > 0) {
+                event.target.nextElementSibling.innerText = tempItem.amount;
+                } else {
+                this.cart = this.filterItem(this.cart, event.target);
+                this.cartItems.removeChild(event.target.parentElement.parentElement.parentElement);
+                }
+                this.subtotals();
+                this.setCartTotal(this.cart);
+                Storage.saveCart(this.cart);
+            }
+        });
+    }
+    // =======================
+
+    setCartTotal(cart) {
+        let tempTotal = 0;
+        let itemsTotal = 0;
+        cart.map(item => {
+          tempTotal += item.price * item.amount;
+          itemsTotal += item.amount;
+        });
+        this.cartTotal.textContent = parseFloat(tempTotal.toFixed(2));
+        this.countItems.textContent = itemsTotal;
+    }
+    subtotals(){
+        let itemsInCart = document.querySelectorAll('.cart-item');
+        for (let item of itemsInCart) {
+            const price = item.querySelector('.product-price').textContent;
+            let quantity = item.querySelector('.quantity').textContent;
+            item.querySelector('.product-subtotal').textContent=quantity*price;
+        };
+    }
+    populateCart(cart) {
+        cart.forEach(item => this.addCartItem(item));
+    }
 }
 
 // ==============================
 (function(){
     const app = new App();
-
     app.addToCarts();
     app.renderCart();
     app.renderLike();
-
 })();
