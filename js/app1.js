@@ -22,7 +22,7 @@ class Storage {
 }
 
 class Product {
-    getProducts() {
+    getProducts(products) {
         return products.map(item => {
                 const name = item.name;
                 const price = item.price;
@@ -49,12 +49,22 @@ class App{
         sidebarToggle.addEventListener("click", () => this.openCart());
 
         if (document.querySelector('.collections')){
-            this.makeCategories(categories);
-        }
-        this.makeShowcase(products);
+            // const url = 'https://my-json-server.typicode.com/couchjanus/db/categories';
 
-        let data = new Product();
-        Storage.saveProducts(data.getProducts());
+            fetch('https://my-json-server.typicode.com/couchjanus/db/categories')
+            .then((categories) => {
+                categories.json().then((categories) => {
+                    this.makeCategories(categories);
+                });
+            })
+            .catch((err) => {
+                console.log('Fetch Error :-S', err);
+            });
+        }
+        // this.makeShowcase(products);
+
+        // let data = new Product();
+        // Storage.saveProducts(data.getProducts());
         
         this.cart = Storage.getCart();
     }
@@ -286,7 +296,6 @@ class App{
     }
 }
 
-
 function categoriesList(categories){
     let result = '';
     categories.forEach(item=>{
@@ -295,14 +304,33 @@ function categoriesList(categories){
     document.querySelector('.categories-list').innerHTML = result;
 } 
 
-
-
-
-
-
 // ==============================
 (function(){
-    const app = new App();
+    const url = 'https://my-json-server.typicode.com/couchjanus/db/products';
+
+    fetch(url)
+        .then((response) => {
+            if (response.status !== 200) {
+                console.log('Looks like there was a problem. Status Code: ' + response.status);
+                return;
+            }
+            response.json().then((products) => {
+                const app = new App();
+
+                let data = new Product();
+                Storage.saveProducts(data.getProducts(products));
+
+                app.makeShowcase(products);
+                app.addToCarts();
+                app.renderCategory();
+                app.renderCart();
+                app.renderLike();
+            });
+        })
+        .catch((err) => {
+            console.log('Fetch Error :-S', err);
+    });
+    
 
     if(document.querySelector('.categories-list')){
         categoriesList(categories);
@@ -335,7 +363,7 @@ function categoriesList(categories){
     if (document.querySelector(".selectpicker")){
         let selectpicker = document.querySelector(".selectpicker");
         selectpicker.addEventListener('change', function() {
-            console.log('You selected: ', this.value);
+            // console.log('You selected: ', this.value);
             switch(this.value){
                 case 'low-high':
                     app.makeShowcase(Storage.getProducts().sort(compareValues('price', 'asc')));
@@ -355,25 +383,6 @@ function categoriesList(categories){
         });
     }
 
-    app.addToCarts();
-    app.renderCategory();
-    app.renderCart();
-    app.renderLike();
-    // Выбор определенной категории
-                // const chooseCategory = event => {
-                //     event.preventDefault();
-                //     const target = event.target;
-
-                //     if (target.classList.contains('category-item')) {
-                //         const category = target.dataset.category;
-                //         const categoryFilter = items => items.filter(item => item.category.includes(category));
-                //         app.makeShowcase(categoryFilter(products));
-                //     } else {
-                //         app.makeShowcase(products);
-                //     }
-                //     app.addToCarts();
-                //     app.renderCart();
-                // };
-                // categories.addEventListener('click', chooseCategory);
     
+        
 })();
